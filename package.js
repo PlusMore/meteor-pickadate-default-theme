@@ -9,8 +9,8 @@ Package.on_use(function (api, where) {
     'js/picker.date.js',
     'js/picker.time.js',
     'js/legacy.js',
-    'css/classic.css',
-    'css/classic.date.css',
-    'css/classic.time.css',
+    'css/default.css',
+    'css/default.date.css',
+    'css/default.time.css',
   ], 'client');
 })
