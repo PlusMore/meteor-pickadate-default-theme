@@ -8,6 +8,7 @@ Package.describe({
 });
 
 Package.on_use(function (api, where) {
+  api.versionsFrom('1.0.3.1');
   api.use('jquery', 'client');
   api.add_files([
     'js/picker.js',
