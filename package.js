@@ -8,7 +8,8 @@ Package.describe({
 });
 
 Package.on_use(function (api, where) {
-  api.versionsFrom(['METEOR@1.1']);
+  api.versionsFrom(['METEOR@0.9.0', 'METEOR@1.0', 'METEOR@1.1']);
+  api.use('jquery', 'client');
   api.add_files([
     'js/picker.js',
     'js/picker.date.js',
