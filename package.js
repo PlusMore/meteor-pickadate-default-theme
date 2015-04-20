@@ -1,6 +1,6 @@
 Package.describe({
   summary: "Default theme for the mobile-friendly, responsive, and lightweight jQuery date & time input picker.",
-  version: "3.3.1",
+  version: "3.5.5",
   // Optional.  Default is package directory name.
   name: "plusmore:pickadate-default-theme",
   // Optional github URL to your source repository.
@@ -8,7 +8,7 @@ Package.describe({
 });
 
 Package.on_use(function (api, where) {
-  api.versionsFrom('1.0.3.1');
+  api.versionsFrom(['METEOR@0.9.0', 'METEOR@1.0', 'METEOR@1.1']);
   api.use('jquery', 'client');
   api.add_files([
     'js/picker.js',
