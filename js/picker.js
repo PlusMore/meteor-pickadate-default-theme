@@ -1,5 +1,5 @@
 /*!
- * pickadate.js v3.5.5, 2015/02/08
+ * pickadate.js v3.5.6, 2015/04/20
  * By Amsul, http://amsul.ca
  * Hosted on http://amsul.github.io/pickadate.js
  * Licensed under MIT
@@ -23,7 +23,7 @@
 var $window = $( window )
 var $document = $( document )
 var $html = $( document.documentElement )
-var supportsTransitions = function(){ return document.body.style.transition != null }
+var supportsTransitions = document.documentElement.style.transition != null
 
 
 /**
@@ -171,7 +171,8 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
 
                 // Insert a new component holder in the root or box.
                 if ( entireComponent ) {
-                    P.$holder = createWrappedComponent()
+                    P.$holder = $( createWrappedComponent() )
+                    prepareElementHolder()
                     P.$root.html( P.$holder )
                 }
                 else P.$root.find( '.' + CLASSES.box ).html( P.component.nodes( STATE.open ) )
@@ -266,21 +267,18 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
 
                         var target = event.target
 
-                        // HACK: Ignore double firing of 'click' / 'focusis' and only close when not prevented
-                        // by default, this fixes an issue where android would open and close on open
-                        if ( event.type == "click" && !event.isDefaultPrevented() ) {
-                          // If the target of the event is not the element, close the picker picker.
-                          // * Don’t worry about clicks or focusins on the root because those don’t bubble up.
-                          //   Also, for Firefox, a click on an `option` element bubbles up directly
-                          //   to the doc. So make sure the target wasn't the doc.
-                          // * In Firefox stopPropagation() doesn’t prevent right-click events from bubbling,
-                          //   which causes the picker to unexpectedly close when right-clicking it. So make
-                          //   sure the event wasn’t a right-click.
-                          if ( target != ELEMENT && target != document && event.which != 3 ) {
-                              // If the target was the holder that covers the screen,
-                              // keep the element focused to maintain tabindex.
-                              P.close( target === P.$holder[0] )
-                          }
+                        // If the target of the event is not the element, close the picker picker.
+                        // * Don’t worry about clicks or focusins on the root because those don’t bubble up.
+                        //   Also, for Firefox, a click on an `option` element bubbles up directly
+                        //   to the doc. So make sure the target wasn't the doc.
+                        // * In Firefox stopPropagation() doesn’t prevent right-click events from bubbling,
+                        //   which causes the picker to unexpectedly close when right-clicking it. So make
+                        //   sure the event wasn’t a right-click.
+                        if ( target != ELEMENT && target != document && event.which != 3 ) {
+
+                            // If the target was the holder that covers the screen,
+                            // keep the element focused to maintain tabindex.
+                            P.close( target === P.$holder[0] )
                         }
 
                     }).on( 'keydown.' + STATE.id, function( event ) {
@@ -814,7 +812,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
     // using the `container` option, the view jumps to the container.
     function focusPickerOnceOpened() {
 
-        if (IS_DEFAULT_THEME && supportsTransitions()) {
+        if (IS_DEFAULT_THEME && supportsTransitions) {
             P.$holder.find('.' + CLASSES.frame).one('transitionend', function() {
                 P.$holder[0].focus()
             })
@@ -1160,3 +1158,6 @@ return PickerConstructor
 
 
 }));
+
+
+
